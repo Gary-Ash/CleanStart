@@ -20,6 +20,7 @@ set appsList to {Â
 	"Magnet", Â
 	"ColorSnapper2", Â
 	"PopHub", Â
+	"Default Folder X", Â
 	"Keyboard Maestro Engine"}
 (*======================================================================================*)
 
@@ -242,3 +243,12 @@ end tell
 
 set volume output volume 50 with output muted --100%
 set volume without output muted
+
+(*****************************************************************************************
+ * if iTerm is running activate it
+ ****************************************************************************************)
+if application "iTerm" is running then
+	tell application "iTerm"
+		activate
+	end tell
+end if
