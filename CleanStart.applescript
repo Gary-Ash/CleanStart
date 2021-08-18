@@ -55,6 +55,23 @@ repeat with theapp in appsList
 	end try
 end repeat
 
+set appFolder to (POSIX path of (path to application support folder from user domain) & "com.stclairsoft.DefaultFolderX5/Default Set/")
+set filesToClean to {Â
+	"DroppedItems.plist", Â
+	"RecentFinderFolders.plist", Â
+	"Favorites.plist", Â
+	"LastFolders.plist", Â
+	"RecentApplications.plist", Â
+	"RecentFiles.plist", Â
+	"RecentFolders.plist"}
+
+repeat with f in filesToClean
+	tell application "Finder"
+		set filename to quoted form of (appFolder & f)
+		do shell script "rm -f " & filename
+	end tell
+end repeat
+
 repeat with theapp in appsList
 	try
 		repeat while application theapp is not running
