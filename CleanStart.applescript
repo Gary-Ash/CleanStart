@@ -6,7 +6,7 @@
  *
  * Author   :  Gary Ash <gary.ash@icloud.com>
  * Created  :  12-Jun-2020  5:38pm
- * Modified :  27-Feb-2021  4:25pm
+ * Modified :  19-Aug-2021  3:25pm
  *
  * Copyright © 2020-2021 By Gee Dbl A All rights reserved.
  ****************************************************************************************)
@@ -20,8 +20,16 @@ set appsList to {Â
 	"Magnet", Â
 	"ColorSnapper2", Â
 	"PopHub", Â
-	"Default Folder X", Â
 	"Keyboard Maestro Engine"}
+
+set filesToClean to {Â
+	"DroppedItems.plist", Â
+	"RecentFinderFolders.plist", Â
+	"Favorites.plist", Â
+	"LastFolders.plist", Â
+	"RecentApplications.plist", Â
+	"RecentFiles.plist", Â
+	"RecentFolders.plist"}
 (*======================================================================================*)
 
 (*****************************************************************************************
@@ -47,29 +55,14 @@ end repeat
 
 set volume with output muted
 
+tell application "Default Folder X" to quit
+
 repeat with theapp in appsList
 	try
 		repeat while application theapp is running
 			tell application theapp to quit
 		end repeat
 	end try
-end repeat
-
-set appFolder to (POSIX path of (path to application support folder from user domain) & "com.stclairsoft.DefaultFolderX5/Default Set/")
-set filesToClean to {Â
-	"DroppedItems.plist", Â
-	"RecentFinderFolders.plist", Â
-	"Favorites.plist", Â
-	"LastFolders.plist", Â
-	"RecentApplications.plist", Â
-	"RecentFiles.plist", Â
-	"RecentFolders.plist"}
-
-repeat with f in filesToClean
-	tell application "Finder"
-		set filename to quoted form of (appFolder & f)
-		do shell script "rm -f " & filename
-	end tell
 end repeat
 
 repeat with theapp in appsList
@@ -217,6 +210,7 @@ if application "Slack" is running then
 		end tell
 	end try
 end if
+
 tell application "Keyboard Maestro" to quit
 (*****************************************************************************************
  * make sure the Desktop has focus, previous version always let a window in focus and I'd
@@ -260,6 +254,19 @@ end tell
 
 set volume output volume 50 with output muted --100%
 set volume without output muted
+
+(*****************************************************************************************
+ * clean up Default Folder X
+ ****************************************************************************************)
+set appFolder to (POSIX path of (path to application support folder from user domain) & "com.stclairsoft.DefaultFolderX5/Default Set/")
+repeat with f in filesToClean
+	tell application "Finder"
+		set filename to quoted form of (appFolder & f)
+		do shell script "rm -f " & filename
+	end tell
+end repeat
+
+tell application "Default Folder X" to launch
 
 (*****************************************************************************************
  * if iTerm is running activate it
