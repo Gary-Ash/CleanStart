@@ -6,7 +6,7 @@
  *
  * Author   :  Gary Ash <gary.ash@icloud.com>
  * Created  :  17-Sep-2022  2:19pm
- * Modified :  29-Feb-2024  3:43pm
+ * Modified :  21-Mar-2024  8:29pm
  *
  * Copyright © 2020-2024 By Gee Dbl A All rights reserved.
  ****************************************************************************************)
@@ -24,14 +24,6 @@ set appsList to {Â
 	"Mona", Â
 	"Keyboard Maestro Engine"}
 
-set filesToClean to {Â
-	"DroppedItems.plist", Â
-	"RecentFinderFolders.plist", Â
-	"Favorites.plist", Â
-	"LastFolders.plist", Â
-	"RecentApplications.plist", Â
-	"RecentFiles.plist", Â
-	"RecentFolders.plist"}
 (*======================================================================================*)
 
 set volume with output muted
@@ -69,6 +61,12 @@ end repeat
 
 delay 5
 
+(*****************************************************************************************
+ * clean up Keyboard Maestro
+ ****************************************************************************************)
+try
+	tell application "Keyboard Maestro" to quit
+end try
 (*****************************************************************************************
  * clean up Pastebot
  ****************************************************************************************)
@@ -295,6 +293,11 @@ tell application "System Events" to tell process "Mona"
 end tell
 
 (******************************************************************************************
+ * start SSH agent
+ *****************************************************************************************)
+do shell script "ssh-agent -s;ssh-add  --apple-load-keychain"
+
+(******************************************************************************************
  * shutdown iTerm if it's running
  *****************************************************************************************)
 try
@@ -302,11 +305,6 @@ try
 		quit
 	end tell
 end try
-
-(******************************************************************************************
- * start SSH agent
- *****************************************************************************************)
-do shell script "ssh-agent -s;ssh-add  --apple-load-keychain"
 
 set volume output volume 50
 delay 0.1
