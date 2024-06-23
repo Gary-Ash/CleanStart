@@ -18,10 +18,10 @@ set appsList to {Â
 	"SnippetsLabLaunchd", Â
 	"Alfred 5", Â
 	"Dash", Â
-	"Moom", Â
 	"Slack", Â
 	"ColorSnapper2", Â
 	"Mona", Â
+	"Moom", Â
 	"Keyboard Maestro Engine"}
 
 (*======================================================================================*)
@@ -52,12 +52,16 @@ set volume with output muted
 
 repeat with theapp in appsList
 	try
-		repeat while application theapp is not running
+		if application theapp is not running then
 			tell application theapp to launch
-			tell application "System Events"
-				set visible of application process theapp to false
-			end tell
-		end repeat
+			repeat while application theapp is not running
+				delay 1.0E-3
+				
+				tell application "System Events"
+					set visible of application process theapp to false
+				end tell
+			end repeat
+		end if
 	end try
 end repeat
 
