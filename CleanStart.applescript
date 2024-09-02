@@ -5,8 +5,8 @@
  * Clean start my system with of my favorite apps running and ready! 
  *
  * Author   :  Gary Ash <gary.ash@icloud.com>
- * Created  :   5-Aug-2024  6:57pm
- * Modified :
+ * Created  :   9-Oct-2024  2:42pm
+ * Modified :  
  *
  * Copyright © 2024 By Gary Ash All rights reserved.
  ****************************************************************************************)
@@ -18,7 +18,6 @@ set appsList to {Â
 	"SnippetsLabLaunchd", Â
 	"Alfred 5", Â
 	"Dash", Â
-	"ColorSnapper2", Â
 	"Mona", Â
 	"Moom", Â
 	"Keyboard Maestro Engine"}
@@ -116,18 +115,6 @@ try
 end try
 
 (*****************************************************************************************
- * ColorSnapper setup
- ****************************************************************************************)
-try
-	tell application "System Events" to tell process "ColorSnapper2"
-		set frontmost to true
-		tell application "ColorSnapper2" to activate
-		key code 53
-	end tell
-end try
-delay 0.1
-
-(*****************************************************************************************
  * clean up Finder windows
  ****************************************************************************************)
 tell application "Finder"
@@ -214,11 +201,13 @@ end if
 (******************************************************************************************
  * close any open windows
  *****************************************************************************************)
-activate application "Finder"
-tell application "System Events"
-	set visible of processes where name is not "Finder" to false
-end tell
-tell application "Finder" to set collapsed of windows to true
+try
+	activate application "Finder"
+	tell application "System Events"
+		set visible of processes where name is not "Finder" to false
+	end tell
+	tell application "Finder" to set collapsed of windows to true
+end try
 
 (*****************************************************************************************
  * setup Mona
