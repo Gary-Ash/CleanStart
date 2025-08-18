@@ -164,7 +164,6 @@ if application "Slack" is running then
 	try
 		tell application "Slack" to activate
 		delay 0.1
-		tell application "Slack" to activate
 		
 		try
 			tell application "System Events" to tell process "Slack"
@@ -173,21 +172,13 @@ if application "Slack" is running then
 				
 				delay 0.1
 				
-				repeat 20 times
+				repeat 10 times
 					try
 						tell application "Slack" to activate
-						
 						click menu item "All Unreads" of menu 1 of menu bar item "Go" of menu bar 1
 						delay 0.01
 						tell application "Slack" to activate
-						
-						repeat 30 times
-							tell application "Slack" to activate
-							key code 53
-							delay 0.01
-						end repeat
-						delay 0.01
-						tell application "Slack" to activate
+						key code 53 using {shift down}
 						click menu item "Select Next Workspace" of menu of menu item "Workspace" of menu of menu bar item "File" of menu bar 1
 					end try
 				end repeat
