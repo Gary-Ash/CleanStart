@@ -13,7 +13,7 @@
 
 global appsList
 set appsList to {Â
-	"Bartender 5", Â
+	"Bartender 6", Â
 	"PasteBot", Â
 	"SnippetsLabLaunchd", Â
 	"Alfred 5", Â
