@@ -115,34 +115,35 @@ end try
  * clean up Finder windows
  ****************************************************************************************)
 tell application "Finder"
-	repeat with w in (get every Finder window)
+	try
+		repeat with w in (get every Finder window)
+			try
+				activate w
+				tell application "System Events" to tell process "Finder"
+					keystroke "a" using {command down}
+					delay 0.05
+					key code 123
+					keystroke "a" using {command down, option down}
+					delay 0.05
+				end tell
+			end try
+		end repeat
+		
 		try
-			activate w
-			tell application "System Events" to tell process "Finder"
-				keystroke "a" using {command down}
-				delay 0.05
-				key code 123
-				keystroke "a" using {command down, option down}
-				delay 0.05
-			end tell
+			set desktopBounds to bounds of window of desktop
+			set w to round (((item 3 of desktopBounds) - 1100) / 2) rounding as taught in school
+			set h to round (((item 4 of desktopBounds) - 1000) / 2) rounding as taught in school
+			set finderBounds to {w, h, 1100 + w, 1000 + h}
 		end try
-	end repeat
-	
-	try
-		set desktopBounds to bounds of window of desktop
-		set w to round (((item 3 of desktopBounds) - 1100) / 2) rounding as taught in school
-		set h to round (((item 4 of desktopBounds) - 1000) / 2) rounding as taught in school
-		set finderBounds to {w, h, 1100 + w, 1000 + h}
-	end try
-	
-	try
+		
+		try
+			set (bounds of window 1) to finderBounds
+		on error
+			make new Finder window to home
+		end try
 		set (bounds of window 1) to finderBounds
-	on error
-		make new Finder window to home
+		close every window
 	end try
-	set (bounds of window 1) to finderBounds
-	close every window
-	
 	try
 		tell application "Finder" to activate
 		tell application "System Events" to tell process "Finder"
