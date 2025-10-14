@@ -13,14 +13,14 @@
 
 global appsList
 set appsList to {Â
-	"Bartender 6", Â
 	"PasteBot", Â
 	"SnippetsLabLaunchd", Â
 	"Alfred 5", Â
 	"Dash", Â
 	"Mona", Â
 	"Moom", Â
-	"Keyboard Maestro Engine"}
+	"Keyboard Maestro Engine", Â
+	"Bartender 6"}
 
 (*======================================================================================*)
 
@@ -48,19 +48,21 @@ end repeat
 set volume with output muted
 
 tell application "System Events"
-	set processList to Â
-		(name of every process where background only is false) as text
-	
-	set myFrontMost to name of first item of Â
-		(processes whose frontmost is true) as text
-	
-	repeat with processName in processList
-		try
-			if processName is not equal to myFrontMost then
-				do shell script "Killall " & quoted form of processName
-			end if
-		end try
-	end repeat
+	try
+		set processList to Â
+			(name of every process where background only is false) as text
+		
+		set myFrontMost to name of first item of Â
+			(processes whose frontmost is true) as text
+		
+		repeat with processName in processList
+			try
+				if processName is not equal to myFrontMost then
+					do shell script "Killall " & quoted form of processName
+				end if
+			end try
+		end repeat
+	end try
 end tell
 delay 0.8
 
@@ -69,7 +71,7 @@ repeat with theapp in appsList
 		if application theapp is not running then
 			tell application theapp to launch
 			repeat while application theapp is not running
-				delay 0.1
+				delay 0.15
 			end repeat
 			
 			tell application "System Events"
