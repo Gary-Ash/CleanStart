@@ -13,14 +13,14 @@
 
 global appsList
 set appsList to {Â
-	"Bartender 6", Â
 	"PasteBot", Â
 	"SnippetsLabLaunchd", Â
 	"Alfred 5", Â
 	"Dash", Â
 	"Mona", Â
 	"Moom", Â
-	"Keyboard Maestro Engine"}
+	"Keyboard Maestro Engine", Â
+	"Bartender 6"}
 
 (*======================================================================================*)
 
@@ -48,19 +48,21 @@ end repeat
 set volume with output muted
 
 tell application "System Events"
-	set processList to Â
-		(name of every process where background only is false) as text
-	
-	set myFrontMost to name of first item of Â
-		(processes whose frontmost is true) as text
-	
-	repeat with processName in processList
-		try
-			if processName is not equal to myFrontMost then
-				do shell script "Killall " & quoted form of processName
-			end if
-		end try
-	end repeat
+	try
+		set processList to Â
+			(name of every process where background only is false) as text
+		
+		set myFrontMost to name of first item of Â
+			(processes whose frontmost is true) as text
+		
+		repeat with processName in processList
+			try
+				if processName is not equal to myFrontMost then
+					do shell script "Killall " & quoted form of processName
+				end if
+			end try
+		end repeat
+	end try
 end tell
 delay 0.8
 
@@ -69,7 +71,7 @@ repeat with theapp in appsList
 		if application theapp is not running then
 			tell application theapp to launch
 			repeat while application theapp is not running
-				delay 0.1
+				delay 0.15
 			end repeat
 			
 			tell application "System Events"
@@ -110,53 +112,6 @@ try
 		click menu item "Close Window" of menu 1 of menu bar item "File" of menu bar 1
 	end tell
 end try
-
-(*****************************************************************************************
- * clean up Finder windows
- ****************************************************************************************)
-tell application "Finder"
-	try
-		repeat with w in (get every Finder window)
-			try
-				activate w
-				tell application "System Events" to tell process "Finder"
-					keystroke "a" using {command down}
-					delay 0.05
-					key code 123
-					keystroke "a" using {command down, option down}
-					delay 0.05
-				end tell
-			end try
-		end repeat
-		
-		try
-			set desktopBounds to bounds of window of desktop
-			set w to round (((item 3 of desktopBounds) - 1100) / 2) rounding as taught in school
-			set h to round (((item 4 of desktopBounds) - 1000) / 2) rounding as taught in school
-			set finderBounds to {w, h, 1100 + w, 1000 + h}
-		end try
-		
-		try
-			set (bounds of window 1) to finderBounds
-		on error
-			make new Finder window to home
-		end try
-		set (bounds of window 1) to finderBounds
-		close every window
-	end try
-	try
-		tell application "Finder" to activate
-		tell application "System Events" to tell process "Finder"
-			click menu item "Clear Menu" of menu of menu item "Recent Items" of menu of menu bar item 1 of menu bar 1
-			click menu item "Clear Menu" of menu of menu item "Recent Folders" of menu of menu bar item "Go" of menu bar 1
-		end tell
-	end try
-	
-	close every window
-	
-end tell
-
-do shell script "killall Finder"
 
 (*****************************************************************************************
  * Slack setup
@@ -206,20 +161,68 @@ try
 end try
 
 (*****************************************************************************************
- * setup Mona
+ * setup Mona 6
  ****************************************************************************************)
-if application "Mona" is running then
-	try
+try
+	if application "Mona" is running then
 		tell application "Mona" to activate
-		tell application "System Events" to tell process "Mona"
+		tell application "System Events" to tell process "Mona 6"
 			click menu item "Refresh" of menu 1 of menu bar item "File" of menu bar 1
 			delay 0.2
 			
 			tell application "Mona" to activate
 			key code 126 using {command down}
+			tell application "Finder" to activate
+		end tell
+	end if
+end try
+
+(*****************************************************************************************
+ * clean up Finder windows
+ ****************************************************************************************)
+tell application "Finder"
+	try
+		repeat with w in (get every Finder window)
+			try
+				activate w
+				tell application "System Events" to tell process "Finder"
+					keystroke "a" using {command down}
+					delay 0.05
+					key code 123
+					keystroke "a" using {command down, option down}
+					delay 0.05
+				end tell
+			end try
+		end repeat
+		
+		try
+			set desktopBounds to bounds of window of desktop
+			set w to round (((item 3 of desktopBounds) - 1100) / 2) rounding as taught in school
+			set h to round (((item 4 of desktopBounds) - 1000) / 2) rounding as taught in school
+			set finderBounds to {w, h, 1100 + w, 1000 + h}
+		end try
+		
+		try
+			set (bounds of window 1) to finderBounds
+		on error
+			make new Finder window to home
+		end try
+		set (bounds of window 1) to finderBounds
+		close every window
+	end try
+	try
+		tell application "Finder" to activate
+		tell application "System Events" to tell process "Finder"
+			click menu item "Clear Menu" of menu of menu item "Recent Items" of menu of menu bar item 1 of menu bar 1
+			click menu item "Clear Menu" of menu of menu item "Recent Folders" of menu of menu bar item "Go" of menu bar 1
 		end tell
 	end try
-end if
+	
+	close every window
+	
+end tell
+
+do shell script "killall Finder"
 
 (******************************************************************************************
  * start SSH agent
