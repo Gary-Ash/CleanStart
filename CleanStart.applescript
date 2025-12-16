@@ -6,7 +6,7 @@
  *
  * Author   :  Gary Ash <gary.ash@icloud.com>
  * Created  :  28-Feb-2025  6:44pm
- * Modified :  
+ * Modified :  16-Dec-2025. 8:13pm
  *
  * Copyright © 2024 By Gary Ash All rights reserved.
  ****************************************************************************************)
@@ -161,12 +161,12 @@ try
 end try
 
 (*****************************************************************************************
- * setup Mona 6
+ * setup Mona
  ****************************************************************************************)
 try
 	if application "Mona" is running then
 		tell application "Mona" to activate
-		tell application "System Events" to tell process "Mona 6"
+		tell application "System Events" to tell process "Mona"
 			click menu item "Refresh" of menu 1 of menu bar item "File" of menu bar 1
 			delay 0.2
 			
