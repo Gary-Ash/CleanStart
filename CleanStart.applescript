@@ -98,18 +98,9 @@ try
 			delay 0.1
 			tell application "Pastebot" to activate
 			click menu item "Clear Clipboard" of menu 1 of menu bar item "Edit" of menu bar 1
-			delay 0.01
-			tell application "Pastebot" to activate
-			
-			keystroke tab
-			delay 0.01
-			tell application "Pastebot" to activate
-			
+			delay 0.2
 			keystroke return
 		end try
-		delay 0.1
-		tell application "Pastebot" to activate
-		click menu item "Close Window" of menu 1 of menu bar item "File" of menu bar 1
 	end tell
 end try
 
