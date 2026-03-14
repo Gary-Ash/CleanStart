@@ -1,3 +1,5 @@
+![](.github/projectLogo.png)
+
 # CleanStart
 
 A macOS utility that resets your workspace to a clean, consistent state by closing running apps, launching your preferred utilities, and clearing clutter.
