@@ -161,7 +161,9 @@ try
 				delay 0.2
 				
 				tell application "Mona" to activate
-				key code 126 using {command down}
+				key code 126 using command down
+				delay 0.1
+				key code 126 using command down
 				tell application "Finder" to activate
 			end tell
 		end if
