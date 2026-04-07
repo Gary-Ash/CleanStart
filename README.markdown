@@ -6,9 +6,13 @@ A macOS utility that resets your workspace to a clean, consistent state by closi
 
 ## What It Does
 
+- **Mutes volume** — Silences speakers during setup to avoid notification sounds
 - **Kills foreground apps** — Terminates all running foreground applications
-- **Launches utilities** — Starts your preferred background utilities (In My case):
-  - PasteBot, SnippetsLab, Alfred 5, Dash, Mona, Moom, Keyboard Maestro Engine, Bartender 6
+- **Launches utilities** — Starts your preferred background utilities (in my case):
+  - PasteBot, Alfred 5, Dash, Mona, Moom, Keyboard Maestro Engine, Bartender 6, SnippetsLab
+- **Clears Pastebot clipboard** — Restarts Pastebot and clears clipboard history
+- **Cleans up Slack** — Marks all unreads as read across workspaces and closes the window
+- **Refreshes Mona** — Refreshes the timeline and scrolls to top
 - **Cleans Finder** — Clears recent items/folders and closes all windows
 - **Starts SSH agent** — Loads SSH keys from keychain
 - **Sets volume** — Restores system volume to 40%

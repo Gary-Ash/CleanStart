@@ -6,7 +6,7 @@
  *
  * Author   :  Gary Ash <gary.ash@icloud.com>
  * Created  :   3-Feb-2026  8:20pm
- * Modified :
+ * Modified :   6-Apr-2026 10:01pm
  *
  * Copyright © 2026 By Gary Ash All rights reserved.
  ****************************************************************************************)
@@ -158,7 +158,7 @@ try
 			tell application "Mona" to activate
 			tell application "System Events" to tell process "Mona"
 				click menu item "Refresh" of menu 1 of menu bar item "File" of menu bar 1
-				delay 0.2
+				delay 1.5
 				
 				tell application "Mona" to activate
 				key code 126 using command down
