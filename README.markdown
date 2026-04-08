@@ -13,7 +13,7 @@ A macOS utility that resets your workspace to a clean, consistent state by closi
 - **Clears Pastebot clipboard** — Restarts Pastebot and clears clipboard history
 - **Cleans up Slack** — Marks all unreads as read across workspaces and closes the window
 - **Refreshes Mona** — Refreshes the timeline and scrolls to top
-- **Cleans Finder** — Clears recent items/folders and closes all windows
+- **Configures Finder** — Sets Downloads to list view with preferred columns, centers and resizes windows, clears recent items/folders
 - **Starts SSH agent** — Loads SSH keys from keychain
 - **Sets volume** — Restores system volume to 40%
 

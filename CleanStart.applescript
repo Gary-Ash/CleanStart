@@ -156,6 +156,8 @@ try
 	try
 		if application "Mona" is running then
 			tell application "Mona" to activate
+			delay 1.5
+			
 			tell application "System Events" to tell process "Mona"
 				click menu item "Refresh" of menu 1 of menu bar item "File" of menu bar 1
 				delay 1.5
@@ -173,45 +175,77 @@ try
  	 * clean up Finder windows
  	 ****************************************************************************************)
 	tell application "Finder"
-		try
-			repeat with w in (get every Finder window)
-				try
-					activate w
-					tell application "System Events" to tell process "Finder"
-						keystroke "a" using {command down}
-						delay 0.05
-						key code 123
-						keystroke "a" using {command down, option down}
-						delay 0.05
-					end tell
-				end try
-			end repeat
+		activate
+		set downloadsFolder to (path to downloads folder)
+		open downloadsFolder
+		delay 0.5
+		set targetWindow to Finder window 1
+		set current view of targetWindow to list view
+	end tell
+	
+	tell application "System Events"
+		tell process "Finder"
+			keystroke "j" using command down
+			delay 1.0
 			
-			try
-				set desktopBounds to bounds of window of desktop
-				set w to round (((item 3 of desktopBounds) - 1100) / 2) rounding as taught in school
-				set h to round (((item 4 of desktopBounds) - 1000) / 2) rounding as taught in school
-				set finderBounds to {w, h, 1100 + w, 1000 + h}
-			end try
-			
-			try
-				set (bounds of window 1) to finderBounds
-			on error
-				make new Finder window to home
-			end try
-			set (bounds of window 1) to finderBounds
-			close every window
-		end try
-		try
-			tell application "Finder" to activate
-			tell application "System Events" to tell process "Finder"
-				click menu item "Clear Menu" of menu of menu item "Recent Items" of menu of menu bar item 1 of menu bar 1
-				click menu item "Clear Menu" of menu of menu item "Recent Folders" of menu of menu bar item "Go" of menu bar 1
+			tell group 1 of window 1
+				-- Columns to enable
+				repeat with colName in {"Size", "Kind", "Date Created", "Date Modified"}
+					set cb to checkbox colName
+					if value of cb is 0 then click cb
+				end repeat
+				
+				-- Columns to disable
+				repeat with colName in {"Date Added", "Date Last Opened", "iCloud Status", Â
+					"Last Modified By", "Shared By", "Version", "Comments", "Tags"}
+					set cb to checkbox colName
+					if value of cb is 1 then click cb
+				end repeat
 			end tell
 			
-			close every window
-		end try
+			keystroke "j" using command down
+		end tell
 	end tell
+	
+	try
+		tell application "Finder"
+			set desktopBounds to bounds of window of desktop
+			set w to round (((item 3 of desktopBounds) - 1100) / 2) rounding as taught in school
+			set h to round (((item 4 of desktopBounds) - 1000) / 2) rounding as taught in school
+			set finderBounds to {w, h, 1100 + w, 1000 + h}
+		end tell
+		
+		tell application "Finder"
+			repeat with w in (get every Finder window)
+				activate
+				activate w
+				tell application "System Events" to tell process "Finder"
+					click menu item "Select All" of menu 1 of menu bar item "Edit" of menu bar 1
+					delay 0.5
+					key code 123
+					key code 126
+					
+					tell application "Finder"
+						try
+							set (bounds of w) to finderBounds
+						on error
+							make new Finder window to home
+							set (bounds of window w) to finderBounds
+						end try
+					end tell
+				end tell
+			end repeat
+			set selection to {}
+		end tell
+	end try
+	
+	try
+		tell application "System Events" to tell process "Finder"
+			click menu item "Clear Menu" of menu of menu item "Recent Items" of menu of menu bar item 1 of menu bar 1
+			click menu item "Clear Menu" of menu of menu item "Recent Folders" of menu of menu bar item "Go" of menu bar 1
+		end tell
+		tell application "Finder" to close every window
+	end try
 	
 	(******************************************************************************************
  	 * start SSH agent
