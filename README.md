@@ -10,7 +10,7 @@ A macOS utility that resets your workspace to a clean, consistent state by closi
 - **Kills foreground apps** — Terminates all running foreground applications
 - **Launches utilities** — Starts your preferred background utilities (in my case):
   - PasteBot, Alfred 5, Dash, Mona, Moom, Keyboard Maestro Engine, Bartender 6, SnippetsLab
-- **Clears Pastebot clipboard** — Restarts Pastebot and clears clipboard history
+- **Clears Pastebot clipboard** — Clears Pastebot's clipboard history
 - **Cleans up Slack** — Marks all unreads as read across workspaces and closes the window
 - **Refreshes Mona** — Refreshes the timeline and scrolls to top
 - **Configures Finder** — Sets Downloads to list view with preferred columns, centers and resizes windows, clears recent items/folders
