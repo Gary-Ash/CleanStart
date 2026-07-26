@@ -7,7 +7,7 @@ set -euo pipefail
 #
 # Author   :  Gary Ash <gary.ash@icloud.com>
 # Created  :   3-Feb-2026  8:20pm
-# Modified :
+# Modified :  26-Jul-2026  4:49pm
 #
 # Copyright © 2026 By Gary Ash All rights reserved.
 #*****************************************************************************************
@@ -23,6 +23,10 @@ cleanup() {
 
 main() {
 	trap cleanup EXIT
+
+	rm -f "CleanStart.app.zip"
+	rm -rf "CleanStart.app"
+	rm -f "entitlements.plist"
 
 	cat >"entitlements.plist" <<'ENTITLEMENTS_PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
