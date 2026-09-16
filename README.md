@@ -61,7 +61,8 @@ To change which utilities get launched, edit `appsList` at the top of `CleanStar
 ```
 
 The script compiles the AppleScript with `osacompile`, swaps in `Info.plist` and `AppIcon.icns`,
-strips the Intel slice, then signs, notarizes, and staples the bundle. It needs:
+strips the Intel slice, then signs, notarizes, staples, and installs the bundle in
+`/Applications`, replacing any copy already there. It needs:
 
 - A **Developer ID Application** certificate in the login keychain
 - A `notarytool` keychain profile named `notary-profile`:

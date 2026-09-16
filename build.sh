@@ -3,11 +3,11 @@ set -euo pipefail
 #*****************************************************************************************
 # build.sh
 #
-# This script will build and notarize the CleanStart.app
+# This script will build, notarize, and install the CleanStart.app
 #
 # Author   :  Gary Ash <gary.ash@icloud.com>
 # Created  :   3-Feb-2026  8:20pm
-# Modified :  15-Sep-2026  9:39pm
+# Modified :  16-Sep-2026  7:58pm
 #
 # Copyright © 2026 By Gary Ash All rights reserved.
 #*****************************************************************************************
@@ -76,6 +76,10 @@ ENTITLEMENTS_PLIST
 		--wait
 
 	xcrun stapler staple "CleanStart.app"
+
+	rm -rf "/Applications/CleanStart.app"
+	ditto "CleanStart.app" "/Applications/CleanStart.app"
+	rm -rf "CleanStart.app"
 }
 
 main "${@}"

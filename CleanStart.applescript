@@ -130,7 +130,7 @@ on startSSHAgent()
 		set p to do shell script "ps -A"
 		
 		if p does not contain "ssh-agent" then
-			do shell script "ssh-add --apple-load-keychain"
+			do shell script "nohup ssh-add --apple-load-keychain >/dev/null 2>&1 &"
 			delay 0.5
 		end if
 	end try
@@ -339,7 +339,7 @@ on cleanFinder()
 			
 			set current view of Finder window 1 to list view
 			set downloadsHasItems to ((count of items of folder (path to downloads folder)) > 0)
-
+			
 			tell application "System Events" to tell process "Finder"
 				keystroke "j" using command down
 				delay 1
