@@ -6,7 +6,7 @@
  *
  * Author   :  Gary Ash <gary.ash@icloud.com>
  * Created  :   3-Feb-2026  8:20pm
- * Modified : 15-Sep-2026 10:39pm
+ * Modified : 16-Sep-2026  7:30pm
  *
  * Copyright © 2026 By Gary Ash All rights reserved.
  *****************************************************************************************)
@@ -337,7 +337,8 @@ on cleanFinder()
 			delay 0.5
 			
 			set current view of Finder window 1 to list view
-			
+			set downloadsHasItems to ((count of items of folder (path to downloads folder)) > 0)
+
 			tell application "System Events" to tell process "Finder"
 				keystroke "j" using command down
 				delay 1
@@ -362,7 +363,7 @@ on cleanFinder()
 				
 				set editMenu to menu 1 of menu bar item "Edit" of menu bar 1
 				
-				if (count of items of folder (path to downloads folder)) > 0 then
+				if downloadsHasItems then
 					click menu item "Select All" of editMenu
 					delay 0.1
 					key code 123 -- Left Arrow
@@ -379,7 +380,7 @@ on cleanFinder()
 			
 			set bounds of Finder window 1 to finderBounds
 			delay 0.1
-			close Finder window 1
+			close every Finder window
 		end tell
 	end try
 end cleanFinder

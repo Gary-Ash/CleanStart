@@ -28,7 +28,8 @@ Steps run in this order:
 9. **Cleans up Slack** — walks every workspace marking All Unreads as read, then closes the window
 10. **Configures Finder** — opens the home folder, then collapses, centers at 1100×1000 and
     closes every open window, reopens Downloads in list view with the visible columns set to
-    Size, Kind, Date Created and Date Modified, and clears Recent Items and Recent Folders
+    Size, Kind, Date Created and Date Modified, clears Recent Items and Recent Folders, then
+    centers and closes the Downloads window as well
 11. **Restores volume** — sets output volume back to 40%
 12. **Quits** — the applet terminates itself once the run handler finishes
 
