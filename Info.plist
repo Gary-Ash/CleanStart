@@ -13,7 +13,7 @@
 	<key>CFBundleIconName</key>
 	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.apple.ScriptEditor.id.CleanStart</string>
+	<string>com.geedbla.CleanStart</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -24,12 +24,9 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>aplt</string>
-	<key>LSMinimumSystemVersionByArchitecture</key>
-	<dict>
-		<key>x86_64</key>
-		<string>10.6</string>
-	</dict>
 	<key>LSRequiresCarbon</key>
+	<true/>
+	<key>LSUIElement</key>
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
 	<string>This script needs to control other applications to run.</string>
@@ -55,24 +52,5 @@
 	<string>This script needs access to administer this system to run.</string>
 	<key>OSAAppletShowStartupScreen</key>
 	<false/>
-	<key>WindowState</key>
-	<dict>
-		<key>bundleDividerCollapsed</key>
-		<true/>
-		<key>bundlePositionOfDivider</key>
-		<real>0</real>
-		<key>dividerCollapsed</key>
-		<false/>
-		<key>eventLogLevel</key>
-		<integer>2</integer>
-		<key>name</key>
-		<string>ScriptWindowState</string>
-		<key>positionOfDivider</key>
-		<real>1078</real>
-		<key>savedFrame</key>
-		<string>728 96 1139 1313 0 0 2560 1409 </string>
-		<key>selectedTab</key>
-		<string>description</string>
-	</dict>
 </dict>
 </plist>

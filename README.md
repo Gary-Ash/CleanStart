@@ -17,7 +17,8 @@ Steps run in this order:
    Accessibility if the applet has not been granted assistive access
 3. **Kills foreground apps** — `killall`s every non-background process except CleanStart itself
 4. **Launches and hides background utilities** — Pastebot, Mona, and Moom, each started hidden
-   if it is not already running
+   if it is not already running (12-second timeout on each wait, so a launch that never
+   completes cannot hang the run)
 5. **Starts the SSH agent** — runs `ssh-add --apple-load-keychain` when no agent is present, so
    Git commit signing works without a prompt
 6. **Clears the Pastebot clipboard** — Edit → Clear Clipboard, confirming the sheet
@@ -25,13 +26,17 @@ Steps run in this order:
    in the background (12-second timeout on each wait, so a slow launch cannot hang the run)
 8. **Refreshes Mona** — File → Refresh, then scrolls the timeline to the top
 9. **Cleans up Slack** — walks every workspace marking All Unreads as read, then closes the window
-10. **Configures Finder** — opens Downloads in list view, sets the visible columns to Size, Kind,
-    Date Created and Date Modified, collapses and centers each open window at 1100×1000 before
-    closing it, then clears Recent Items and Recent Folders
+10. **Configures Finder** — opens the home folder, then collapses, centers at 1100×1000 and
+    closes every open window, reopens Downloads in list view with the visible columns set to
+    Size, Kind, Date Created and Date Modified, and clears Recent Items and Recent Folders
 11. **Restores volume** — sets output volume back to 40%
+12. **Quits** — the applet terminates itself once the run handler finishes
 
 Every step after the app launches is wrapped in its own error handler, so an app you do not have
 installed is skipped rather than aborting the run.
+
+CleanStart is an agent app (`LSUIElement`), so it never takes a Dock tile or a menu bar while it
+works. Combined with the explicit quit, it leaves nothing behind once setup is done.
 
 ## Requirements
 

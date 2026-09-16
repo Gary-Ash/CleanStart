@@ -7,7 +7,7 @@ set -euo pipefail
 #
 # Author   :  Gary Ash <gary.ash@icloud.com>
 # Created  :   3-Feb-2026  8:20pm
-# Modified :  26-Jul-2026  4:49pm
+# Modified :  15-Sep-2026  9:39pm
 #
 # Copyright © 2026 By Gary Ash All rights reserved.
 #*****************************************************************************************
@@ -41,22 +41,22 @@ main() {
 </plist>
 ENTITLEMENTS_PLIST
 
-	SIGNING_IDENTITY=$(security find-identity -v -p codesigning | grep "Developer ID Application" | head -1 | sed 's/.*"\(.*\)".*/\1/')
+	SIGNING_IDENTITY=$(security find-identity -v -p codesigning | grep "Developer ID Application" | head -1 | sed 's/.*"\(.*\)".*/\1/' || true)
 
-	if [[ -z "${SIGNING_IDENTITY}" ]]; then
-		echo "Error: No Apple Distribution certificate found in keychain" >&2
+	if [[ -z ${SIGNING_IDENTITY} ]]; then
+		echo "Error: No Developer ID Application certificate found in keychain" >&2
 		exit 1
 	fi
 
 	echo "Using signing identity: [${SIGNING_IDENTITY}]"
 
-	osacompile -o "CleanStart.app" "CleanStart.applescript" >/dev/null
+	osacompile -x -o "CleanStart.app" "CleanStart.applescript" >/dev/null
 	cp -f Info.plist CleanStart.app/Contents/Info.plist
 	cp -f AppIcon.icns CleanStart.app/Contents/Resources
 	rm -f CleanStart.app/Contents/Resources/applet.icns
 
 	while IFS= read -r binary; do
-		if file "${binary}" | grep -q "Mach-O"; then
+		if lipo -archs "${binary}" 2>/dev/null | grep -qw "x86_64"; then
 			lipo "${binary}" -remove x86_64 -output "${binary}.tmp"
 			mv "${binary}.tmp" "${binary}"
 			codesign --force --sign - "${binary}" 2>/dev/null || true
@@ -66,7 +66,7 @@ ENTITLEMENTS_PLIST
 	codesign --force --sign "${SIGNING_IDENTITY}" \
 		--options runtime \
 		--entitlements "entitlements.plist" \
-		--deep "CleanStart.app"
+		"CleanStart.app"
 
 	codesign --verify --verbose "CleanStart.app"
 	ditto -c -k --keepParent "CleanStart.app" "CleanStart.app.zip"
