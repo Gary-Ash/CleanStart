@@ -131,6 +131,7 @@ on startSSHAgent()
 		
 		if p does not contain "ssh-agent" then
 			do shell script "ssh-add --apple-load-keychain"
+			delay 0.5
 		end if
 	end try
 end startSSHAgent
