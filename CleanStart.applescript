@@ -6,7 +6,7 @@
  *
  * Author   :  Gary Ash <gary.ash@icloud.com>
  * Created  :   3-Feb-2026  8:20pm
- * Modified : 16-Sep-2026  7:30pm
+ * Modified : 16-Sep-2026  8:09pm
  *
  * Copyright © 2026 By Gary Ash All rights reserved.
  *****************************************************************************************)
@@ -130,8 +130,7 @@ on startSSHAgent()
 		set p to do shell script "ps -A"
 		
 		if p does not contain "ssh-agent" then
-			do shell script "nohup ssh-add --apple-load-keychain >/dev/null 2>&1 &"
-			delay 0.5
+			do shell script "ssh-add --apple-load-keychain >/dev/null 2>&1"
 		end if
 	end try
 end startSSHAgent
