@@ -6,7 +6,7 @@
  *
  * Author   :  Gary Ash <gary.ash@icloud.com>
  * Created  :   3-Feb-2026  8:20pm
- * Modified : 16-Sep-2026  8:09pm
+ * Modified : 17-Oct-2026 10:45pm
  *
  * Copyright © 2026 By Gary Ash All rights reserved.
  *****************************************************************************************)
@@ -61,11 +61,10 @@ on ensureAssistiveAccess()
 			end tell
 			
 		on error
-			tell application "System Settings"
-				set securityPane to pane id "com.apple.preference.security"
-				tell securityPane to reveal anchor "Privacy_Accessibility"
-				activate
-			end tell
+			(* The pane id "com.apple.preference.security" no longer exists, so open the pane by URL. *)
+			try
+				do shell script "open 'x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility'"
+			end try
 			
 			delay 1
 		end try
