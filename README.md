@@ -19,19 +19,17 @@ Steps run in this order:
 4. **Launches and hides background utilities** — Pastebot, Mona, and Moom, each started hidden
    if it is not already running (12-second timeout on each wait, so a launch that never
    completes cannot hang the run)
-5. **Starts the SSH agent** — runs `ssh-add --apple-load-keychain` when no agent is present, so
-   Git commit signing works without a prompt
-6. **Clears the Pastebot clipboard** — Edit → Clear Clipboard, confirming the sheet
-7. **Preps SnippetsLab** — launches it if it is not running, then closes its windows so it sits
+5. **Clears the Pastebot clipboard** — Edit → Clear Clipboard, confirming the sheet
+6. **Preps SnippetsLab** — launches it if it is not running, then closes its windows so it sits
    in the background (12-second timeout on each wait, so a slow launch cannot hang the run)
-8. **Refreshes Mona** — File → Refresh, then scrolls the timeline to the top
-9. **Cleans up Slack** — walks every workspace marking All Unreads as read, then closes the window
-10. **Configures Finder** — opens the home folder, then collapses, centers at 1100×1000 and
-    closes every open window, reopens Downloads in list view with the visible columns set to
-    Size, Kind, Date Created and Date Modified, clears Recent Items and Recent Folders, then
-    centers and closes the Downloads window as well
-11. **Restores volume** — sets output volume back to 40%
-12. **Quits** — the applet terminates itself once the run handler finishes
+7. **Refreshes Mona** — File → Refresh, then scrolls the timeline to the top
+8. **Cleans up Slack** — walks every workspace marking All Unreads as read, then closes the window
+9. **Configures Finder** — opens the home folder, then collapses, centers at 1100×1000 and
+   closes every open window, reopens Downloads in list view with the visible columns set to
+   Size, Kind, Date Created and Date Modified, clears Recent Items and Recent Folders, then
+   centers and closes the Downloads window as well
+10. **Restores volume** — sets output volume back to 40%
+11. **Quits** — the applet terminates itself once the run handler finishes
 
 Every step after the app launches is wrapped in its own error handler, so an app you do not have
 installed is skipped rather than aborting the run.
